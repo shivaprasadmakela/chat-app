@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useParams, useNavigate } from "react-router-dom";
 
-const socket = io("http://localhost:5000"); // change when deployed
+const socket = io("https://chat-app-lzrv.onrender.com");
 
 export default function ChatRoom() {
   const { roomId } = useParams();
