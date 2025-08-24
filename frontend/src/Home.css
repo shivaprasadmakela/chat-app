@@ -16,6 +16,12 @@
   margin: 10px 0;
 }
 
+.logo-img{
+  height: 100px;
+}
+.logo-user{
+  height: 50px;
+}
 .header p {
   max-width: 600px;
   margin: 10px auto;

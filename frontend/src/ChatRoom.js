@@ -68,7 +68,7 @@ export default function ChatRoom() {
     return (
       <div className="join-page">
         <div className="join-card">
-          <div className="icon">👤</div>
+<img src="/relation.png" alt="Chat Icon" className="logo-relations" />  
           <h2>Join Chat Room</h2>
           <h5>{roomId}</h5>
           <p>Enter your details to continue</p>

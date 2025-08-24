@@ -17,7 +17,7 @@ export default function JoinChat() {
   return (
     <div className="join-page">
       <div className="join-card">
-        <div className="icon">👤</div>
+<img src="/user.png" alt="Chat Icon" className="logo-user" />  
         <h2>Join Chat Room</h2>
         <p>Enter your details to continue</p>
 

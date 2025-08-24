@@ -5,15 +5,18 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
 
-const handleCreaterRoom = () => {
-navigate("/create-room");
-}
+  const handleCreaterRoom = () => {
+    navigate("/create-room");
+  };
 
   return (
     <div className="homepage">
       <div className="header">
-        <div className="icon">💬</div>
-        <h1>Private Chat</h1>
+        {/* Using image from public folder */}
+        <div className="icon">
+          <img src="/meetme.png" alt="Chat Icon" className="logo-img" />
+        </div>
+        <h1>Talk Now With Private Chat</h1>
         <p>
           Create instant private chat rooms. No accounts, no history. Just pure,
           temporary conversations.
@@ -31,8 +34,7 @@ navigate("/create-room");
         </div>
 
         <div className="feature-card">
-          <span className="emoji">👤</span>
-          <h3>No Registration</h3>
+<img src="/user.png" alt="Chat Icon" className="logo-user" />          <h3>No Registration</h3>
           <p>
             Just enter your name and start chatting. No emails, passwords, or
             accounts needed.
@@ -49,11 +51,12 @@ navigate("/create-room");
         </div>
       </div>
 
-      <button className="create-btn" onClick={handleCreaterRoom}>Create Chat Room</button>
+      <button className="create-btn" onClick={handleCreaterRoom}>
+        Create Chat Room
+      </button>
       <p className="footer-text">
         Free • Private • No Registration Required
       </p>
     </div>
   );
-};
-
+}
