@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useParams, useNavigate } from "react-router-dom";
+import "./ChatRoom.css";
+import { FiCopy, FiCheck, FiLogOut } from "react-icons/fi";
 
 const socket = io("https://chat-app-lzrv.onrender.com");
 
@@ -14,31 +16,27 @@ export default function ChatRoom() {
   const [joined, setJoined] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Subscribe to messages (no history)
+  // Subscribe to new messages
   useEffect(() => {
     const onMsg = (msg) => setMessages((prev) => [...prev, msg]);
     socket.on("message", onMsg);
-    return () => {
-      socket.off("message", onMsg);
-    };
+    return () => socket.off("message", onMsg);
   }, []);
 
-  // Auto-join on mount if we have a stored name
+  // Auto join if name stored
   useEffect(() => {
     const savedName = localStorage.getItem("username");
-    if (savedName) {
+    if (savedName && !joined) {
+      // ✅ prevent duplicate emits
       setName(savedName);
-      // keep them in current room and join silently
       localStorage.setItem("roomId", roomId);
       socket.emit("join-room", { roomId, name: savedName });
       setJoined(true);
-      // DO NOT load any history — messages start empty after refresh by design
     }
-  }, [roomId]);
+  }, [roomId, joined]);
 
   const joinRoom = () => {
     if (!name.trim()) return;
-    // remember for future refreshes
     localStorage.setItem("username", name);
     localStorage.setItem("roomId", roomId);
     socket.emit("join-room", { roomId, name });
@@ -68,45 +66,83 @@ export default function ChatRoom() {
 
   if (!joined) {
     return (
-      <div className="container center">
-        <input
-          className="input"
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button className="btn" onClick={joinRoom}>Join Chat</button>
+      <div className="join-page">
+        <div className="join-card">
+          <div className="icon">👤</div>
+          <h2>Join Chat Room</h2>
+          <h5>{roomId}</h5>
+          <p>Enter your details to continue</p>
+
+          <input
+            type="text"
+            className="input"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button className="join-btn" onClick={joinRoom}>
+            Join Room
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="chat-container">
+      {/* Header */}
       <div className="chat-header">
-        <h2>{name}</h2>
+        <h2>Room: {roomId}</h2>
+        <h3>Welcome! {name}</h3>
         <div className="header-buttons">
           <button className="btn copy" onClick={copyLink}>
-            {copied ? "Copied!" : "Copy Link"}
+            {copied ? (
+              <>
+                <FiCheck /> Copied!
+              </>
+            ) : (
+              <>
+                <FiCopy /> Copy Link
+              </>
+            )}
           </button>
-          <button className="btn leave" onClick={leaveRoom}>Exit Room</button>
+
+          <button className="btn leave" onClick={leaveRoom}>
+            <FiLogOut /> Exit Room
+          </button>
         </div>
       </div>
 
+      {/* Messages */}
       <div className="chat-box">
         {messages.map((m, i) => (
-          <p key={i}><b>{m.name}:</b> {m.text}</p>
+          <div
+            key={i}
+            className={`message ${m.name === name ? "me" : "other"}`}
+          >
+            <span className="sender">{m.name}</span>
+            <h5 className="text">{m.text}</h5>
+            <span className="sender">
+              {new Date(m.ts).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+          </div>
         ))}
       </div>
 
+      {/* Input */}
       <div className="chat-input">
         <input
-          className="input"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Type a message"
+          placeholder="Type a message..."
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-        <button className="btn" onClick={sendMessage}>Send</button>
+        <button className="btn send" onClick={sendMessage}>
+          ➤
+        </button>
       </div>
     </div>
   );

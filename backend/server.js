@@ -10,22 +10,20 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-// No room-level message storage at all.
-// Each client maintains its own in-memory view.
 
 io.on("connection", (socket) => {
   socket.on("join-room", ({ roomId, name }) => {
     socket.join(roomId);
-    socket.to(roomId).emit("message", { name: `${name}`, text: "joined" });
+    socket.to(roomId).emit("message", { name: `${name}`, text: "joined" ,  ts: Date.now()});
   });
 
   socket.on("send-message", ({ roomId, name, text }) => {
-    io.to(roomId).emit("message", { name, text }); // only broadcast
+    io.to(roomId).emit("message", { name, text , ts: Date.now()});
   });
 
   socket.on("leave-room", ({ roomId, name }) => {
     socket.leave(roomId);
-    socket.to(roomId).emit("message", { name: `${name}`, text:  left });
+    socket.to(roomId).emit("message", { name: `${name}`, text:  "left",  ts: Date.now() });
   });
 });
 
