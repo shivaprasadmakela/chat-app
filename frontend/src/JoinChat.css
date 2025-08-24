@@ -75,10 +75,14 @@
 
 /* Mobile Responsive */
 @media (max-width: 600px) {
+  
 
     .join-page{
 padding: 30px;
-height: 100%;
+display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
     }
   .join-card {
     width: 90%;
@@ -101,5 +105,6 @@ height: 100%;
   .join-btn, .create-btn, .copy-btn {
     font-size: 14px;
     padding: 10px;
+     width: 100%;
   }
 }

@@ -153,6 +153,15 @@ gap: 10px
 
 /* Mobile responsiveness */
 @media (max-width: 600px) {
+
+  .chat-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+    margin-right: 30px;
+  color: #fff;
+}
+
   .chat-header h2 {
     font-size: 14px;
   }
