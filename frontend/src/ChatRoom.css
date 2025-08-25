@@ -32,6 +32,10 @@ gap: 10px
 .header-buttons .btn {
   margin-left: 10px;
 }
+.header-text{
+  display: flex;
+  flex-direction: column;
+}
 
 /* Messages */
 .chat-box {
@@ -149,6 +153,14 @@ gap: 10px
   border-radius: 6px;
   border: none;
   font-size: 14px;
+}
+
+.no-messages{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
 }
 
 /* Mobile responsiveness */

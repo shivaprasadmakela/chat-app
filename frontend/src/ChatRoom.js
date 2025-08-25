@@ -92,8 +92,11 @@ export default function ChatRoom() {
     <div className="chat-container">
       {/* Header */}
       <div className="chat-header">
-        <h2>Room: {roomId}</h2>
-        <h3>Welcome! {name}</h3>
+       <div className="header-text">
+         <h3>Welcome! {name}</h3>
+        <p>Room: {roomId}</p>
+       </div>
+        
         <div className="header-buttons">
           <button className="btn copy" onClick={copyLink}>
             {copied ? (
@@ -114,23 +117,31 @@ export default function ChatRoom() {
       </div>
 
       {/* Messages */}
-      <div className="chat-box">
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`message ${m.name === name ? "me" : "other"}`}
-          >
-            <span className="sender">{m.name}</span>
-            <h5 className="text">{m.text}</h5>
-            <span className="sender">
-              {new Date(m.ts).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </div>
-        ))}
+<div className="chat-box">
+  {messages.length === 0 ? (
+    <div className="no-messages">
+      <img src="/message-more.png" alt="No messages" className="no-msg-img" />
+      <p>No messages yet. Start the conversation!</p>
+    </div>
+  ) : (
+    messages.map((m, i) => (
+      <div
+        key={i}
+        className={`message ${m.name === name ? "me" : "other"}`}
+      >
+        <span className="sender">{m.name}</span>
+        <h5 className="text">{m.text}</h5>
+        <span className="sender">
+          {new Date(m.ts).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
       </div>
+    ))
+  )}
+</div>
+
 
       {/* Input */}
       <div className="chat-input">

@@ -29,8 +29,14 @@ h1{
 h3{
   color: #fff;
 }
-h5 {
-  margin: 0;         /* remove default margin */
-  font-size: 16px;   /* your size */
-  font-weight: normal; /* remove bold */
+h1, h2, h3, h5, p {
+  margin: 0;          /* removes browser default margins */
+  font-size: 16px;    /* same size for all */
+  font-weight: normal; /* removes bold from headings */
+}
+
+
+p{
+  font-size: 10px;
+  color: floralwhite;
 }
