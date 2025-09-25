@@ -16,18 +16,25 @@ export default function ChatRoom() {
   const [joined, setJoined] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Subscribe to new messages
+const socket = io("https://chat-app-lzrv.onrender.com", {
+  transports: ["websocket"],   
+  reconnection: true,         
+  reconnectionAttempts: 10,    
+  reconnectionDelay: 2000,     
+  reconnectionDelayMax: 10000, 
+  timeout: 20000,           
+});
+
+
   useEffect(() => {
     const onMsg = (msg) => setMessages((prev) => [...prev, msg]);
     socket.on("message", onMsg);
     return () => socket.off("message", onMsg);
   }, []);
 
-  // Auto join if name stored
   useEffect(() => {
     const savedName = localStorage.getItem("username");
     if (savedName && !joined) {
-      // ✅ prevent duplicate emits
       setName(savedName);
       localStorage.setItem("roomId", roomId);
       socket.emit("join-room", { roomId, name: savedName });
