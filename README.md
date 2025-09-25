@@ -73,7 +73,7 @@ Emits messages for join, leave, and chat events
 
 No database used; all messages vanish on refresh or exit
 
-3. Setup Frontend
+### 3. Setup Frontend
 cd frontend
 npm install
 npm start
@@ -87,7 +87,7 @@ Messages appear live using Socket.IO
 
 On refresh, the chat for that user clears but room stays active
 
-🤝 Contributing
+# 🤝 Contributing
 
 We welcome contributions! 🎉
 
