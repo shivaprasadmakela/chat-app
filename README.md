@@ -42,10 +42,10 @@ It allows users to create instant chat rooms without registration — purely pee
 ## 📸 Screenshots  
 
 **Home Page**  
-![Home Screenshot](./screenshots/home.png)  
+![Home Screenshot](./home.png)  
 
 **Chat Room**  
-![Chat Screenshot](./screenshots/chatroom.png)  
+![Chat Screenshot](./chatroom.png)  
 
 ---
 
