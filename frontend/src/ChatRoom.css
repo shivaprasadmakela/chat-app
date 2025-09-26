@@ -163,6 +163,20 @@ gap: 10px
   height: 200px;
 }
 
+.emoji-picker {
+  position: absolute;
+  top: 60px;
+  right: 1px;
+  z-index: 10;
+}
+.btn.emoji {
+  background: none;
+  font-size: 22px;
+ 
+  cursor: pointer;
+}
+
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
 

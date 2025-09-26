@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ChatRoom.css";
-import { FiCopy, FiCheck, FiLogOut } from "react-icons/fi";
+import { FiCopy, FiCheck, FiLogOut, FiSmile } from "react-icons/fi";
+import EmojiPicker from "emoji-picker-react";
 
 export default function ChatRoom() {
   const { roomId } = useParams();
@@ -13,15 +14,31 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [joined, setJoined] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const socket = io("https://chat-app-lzrv.onrender.com", {
-    transports: ["websocket"],
-    reconnection: true,
-    reconnectionAttempts: 10,
-    reconnectionDelay: 2000,
-    reconnectionDelayMax: 10000,
-    timeout: 20000,
-  });
+  const socket = io("https://chat-app-lzrv.onrender.com");
+
+  const emojiRef = useRef(null);
+  const emojiBtnRef = useRef(null);
+
+  // Close emoji picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiRef.current &&
+        !emojiRef.current.contains(event.target) &&
+        emojiBtnRef.current &&
+        !emojiBtnRef.current.contains(event.target)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const onMsg = (msg) => setMessages((prev) => [...prev, msg]);
@@ -53,7 +70,7 @@ export default function ChatRoom() {
       setText("");
     }
   };
-  
+
   setInterval(() => {
     socket.emit("ping");
   }, 20000);
@@ -70,6 +87,10 @@ export default function ChatRoom() {
     navigator.clipboard.writeText(link);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const onEmojiClick = (emojiData) => {
+    setText((prev) => prev + emojiData.emoji);
   };
 
   if (!joined) {
@@ -162,6 +183,21 @@ export default function ChatRoom() {
           placeholder="Type a message..."
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
+
+        {showEmojiPicker && (
+          <div className="emoji-picker" ref={emojiRef}>
+            <EmojiPicker onEmojiClick={onEmojiClick} />
+          </div>
+        )}
+
+        <button
+          className="btn emoji"
+          ref={emojiBtnRef}
+          onClick={() => setShowEmojiPicker((prev) => !prev)}
+        >
+          <FiSmile />
+        </button>
+
         <button className="btn send" onClick={sendMessage}>
           ➤
         </button>
