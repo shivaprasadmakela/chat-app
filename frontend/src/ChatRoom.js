@@ -4,8 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./ChatRoom.css";
 import { FiCopy, FiCheck, FiLogOut } from "react-icons/fi";
 
-const socket = io("https://chat-app-lzrv.onrender.com");
-
 export default function ChatRoom() {
   const { roomId } = useParams();
   const navigate = useNavigate();
@@ -16,15 +14,14 @@ export default function ChatRoom() {
   const [joined, setJoined] = useState(false);
   const [copied, setCopied] = useState(false);
 
-const socket = io("https://chat-app-lzrv.onrender.com", {
-  transports: ["websocket"],   
-  reconnection: true,         
-  reconnectionAttempts: 10,    
-  reconnectionDelay: 2000,     
-  reconnectionDelayMax: 10000, 
-  timeout: 20000,           
-});
-
+  const socket = io("https://chat-app-lzrv.onrender.com", {
+    transports: ["websocket"],
+    reconnection: true,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 2000,
+    reconnectionDelayMax: 10000,
+    timeout: 20000,
+  });
 
   useEffect(() => {
     const onMsg = (msg) => setMessages((prev) => [...prev, msg]);
@@ -56,6 +53,10 @@ const socket = io("https://chat-app-lzrv.onrender.com", {
       setText("");
     }
   };
+  
+  setInterval(() => {
+    socket.emit("ping");
+  }, 20000);
 
   const leaveRoom = () => {
     socket.emit("leave-room", { roomId, name });
@@ -75,7 +76,7 @@ const socket = io("https://chat-app-lzrv.onrender.com", {
     return (
       <div className="join-page">
         <div className="join-card">
-<img src="/relation.png" alt="Chat Icon" className="logo-relations" />  
+          <img src="/relation.png" alt="Chat Icon" className="logo-relations" />
           <h2>Join Chat Room</h2>
           <h5>{roomId}</h5>
           <p>Enter your details to continue</p>
@@ -99,11 +100,11 @@ const socket = io("https://chat-app-lzrv.onrender.com", {
     <div className="chat-container">
       {/* Header */}
       <div className="chat-header">
-       <div className="header-text">
-         <h3>Welcome! {name}</h3>
-        <p>Room: {roomId}</p>
-       </div>
-        
+        <div className="header-text">
+          <h3>Welcome! {name}</h3>
+          <p>Room: {roomId}</p>
+        </div>
+
         <div className="header-buttons">
           <button className="btn copy" onClick={copyLink}>
             {copied ? (
@@ -124,31 +125,34 @@ const socket = io("https://chat-app-lzrv.onrender.com", {
       </div>
 
       {/* Messages */}
-<div className="chat-box">
-  {messages.length === 0 ? (
-    <div className="no-messages">
-      <img src="/message-more.png" alt="No messages" className="no-msg-img" />
-      <p>No messages yet. Start the conversation!</p>
-    </div>
-  ) : (
-    messages.map((m, i) => (
-      <div
-        key={i}
-        className={`message ${m.name === name ? "me" : "other"}`}
-      >
-        <span className="sender">{m.name}</span>
-        <h5 className="text">{m.text}</h5>
-        <span className="sender">
-          {new Date(m.ts).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </span>
+      <div className="chat-box">
+        {messages.length === 0 ? (
+          <div className="no-messages">
+            <img
+              src="/message-more.png"
+              alt="No messages"
+              className="no-msg-img"
+            />
+            <p>No messages yet. Start the conversation!</p>
+          </div>
+        ) : (
+          messages.map((m, i) => (
+            <div
+              key={i}
+              className={`message ${m.name === name ? "me" : "other"}`}
+            >
+              <span className="sender">{m.name}</span>
+              <h5 className="text">{m.text}</h5>
+              <span className="sender">
+                {new Date(m.ts).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+          ))
+        )}
       </div>
-    ))
-  )}
-</div>
-
 
       {/* Input */}
       <div className="chat-input">
