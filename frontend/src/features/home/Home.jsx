@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiZap, FiUserCheck, FiShield } from 'react-icons/fi';
 import Button from '../../shared/components/Button/Button';
@@ -9,7 +9,6 @@ const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
 
 export default function Home() {
   const navigate = useNavigate();
-  const [serverWarming, setServerWarming] = useState(true);
 
   // Warm up the backend server on mount (prevents Cloud Run cold start)
   useEffect(() => {
@@ -25,8 +24,6 @@ export default function Home() {
         }
       } catch (error) {
         console.warn('⚠️ Could not warm up server:', error.message);
-      } finally {
-        setServerWarming(false);
       }
     };
 
