@@ -7,6 +7,20 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
+// Health check endpoint for monitoring and warming
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'Socket.io server is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Ping endpoint for cold start warming
+app.get('/ping', (req, res) => {
+  res.json({ status: 'pong', timestamp: new Date().toISOString() });
+});
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -45,6 +59,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () =>
-  console.log("✅ Server running on http://localhost:5000")
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () =>
+  console.log(`✅ Server running on port ${PORT}`)
 );

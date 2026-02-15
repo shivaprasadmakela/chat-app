@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiZap, FiUserCheck, FiShield } from 'react-icons/fi';
 import Button from '../../shared/components/Button/Button';
 import FeatureCard from './components/FeatureCard';
 import styles from './Home.module.css';
 
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
+
 export default function Home() {
   const navigate = useNavigate();
+  const [serverWarming, setServerWarming] = useState(true);
+
+  // Warm up the backend server on mount (prevents Cloud Run cold start)
+  useEffect(() => {
+    const warmUpServer = async () => {
+      try {
+        const response = await fetch(`${SOCKET_URL}/ping`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        if (response.ok) {
+          console.log('✅ Backend server warmed up');
+        }
+      } catch (error) {
+        console.warn('⚠️ Could not warm up server:', error.message);
+      } finally {
+        setServerWarming(false);
+      }
+    };
+
+    warmUpServer();
+  }, []);
 
   const handleCreateRoom = () => {
     navigate('/create-room');
