@@ -1,0 +1,47 @@
+.messageList {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-secondary);
+}
+
+.emptyState {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2xl);
+    text-align: center;
+}
+
+.emptyIcon {
+    width: 120px;
+    height: 120px;
+    color: var(--color-primary);
+    opacity: 0.3;
+    margin-bottom: var(--space-lg);
+}
+
+.emptyText {
+    font-size: var(--font-size-md);
+    color: var(--color-text-muted);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .messageList {
+        padding: var(--space-md);
+    }
+
+    .emptyIcon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .emptyText {
+        font-size: var(--font-size-sm);
+    }
+}

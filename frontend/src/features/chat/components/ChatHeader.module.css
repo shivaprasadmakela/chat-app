@@ -1,0 +1,66 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    background: var(--color-bg-elevated);
+    border-bottom: 1px solid var(--color-border);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.welcome {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.roomId {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-family: 'Courier New', monospace;
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.copyBtn {
+    background: var(--color-bg-tertiary);
+}
+
+.leaveBtn {
+    color: var(--color-error);
+}
+
+.leaveBtn:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        width: 100%;
+    }
+
+    .actions button {
+        flex: 1;
+    }
+
+    .welcome {
+        font-size: var(--font-size-md);
+    }
+}

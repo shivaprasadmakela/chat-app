@@ -1,42 +1,23 @@
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  background: #000000; /* dark background */
-}
+/* Import design system */
+@import './styles/variables.css';
+@import './styles/reset.css';
+@import './styles/global.css';
 
-
+/* Temporary global input styles for backward compatibility */
+/* These will be removed once all components use the Input component */
 input {
   width: 100%;
   padding: 12px;
-  background: #0b0b0b; 
-  border: 2px solid #161212;       
-  border-radius: 8px;
-  outline: none;      
-  color: #fff;
-  font-size: 15px;
-  transition: all 0.3s ease; 
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  transition: all var(--transition-base);
 }
 
 input:focus {
-  border: 2px solid #8b5cf6; 
-  box-shadow: 0 0 8px #8b5cf6;
-}
-
-h1{
-  color: #8b5cf6;
-  font-weight: 700;
-}
-h3{
-  color: #fff;
-}
-h1, h2, h3, h5, p {
-  margin: 0;          /* removes browser default margins */
-  font-size: 16px;    /* same size for all */
-  font-weight: normal; /* removes bold from headings */
-}
-
-
-p{
-  font-size: 10px;
-  color: floralwhite;
+  border: 2px solid var(--color-border-focus);
+  box-shadow: 0 0 8px var(--color-border-focus);
 }
