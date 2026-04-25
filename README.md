@@ -4,7 +4,7 @@
 [![Socket.IO](https://img.shields.io/badge/Powered%20by-Socket.IO-black?logo=socket.io)](https://socket.io/)  
 [![Express](https://img.shields.io/badge/Backend-Express.js-green?logo=express)](https://expressjs.com/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-
+ 
 🚀 **Talk Now** is a real-time private chat application built with **React.js (frontend)** and **Node.js + Express + Socket.IO (backend)**.  
 It allows users to create instant chat rooms without registration — purely peer-to-peer communication powered by **WebSockets**.  
 
