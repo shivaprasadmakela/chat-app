@@ -4,13 +4,17 @@ import { getSocket } from '../utils/socket';
 export default function useSocket() {
   const [socket] = useState(() => getSocket());
   const [connected, setConnected] = useState(false);
+
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const handleConnect = () => {
       setConnected(true);
       setError(null);
     };
+
+
 
     const handleDisconnect = () => {
       setConnected(false);
